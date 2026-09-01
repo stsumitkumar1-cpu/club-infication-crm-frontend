@@ -1,0 +1,188 @@
+.dashboard-layout {
+  display: flex;
+  height: 100vh;
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.sidebar {
+  width: 260px;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.brand-logo {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  /* The artwork has a transparent background, so give it a light plate
+     rather than the old indigo fill, and contain it so it never distorts. */
+  background-color: #f3f4ff;
+  object-fit: contain;
+  padding: 3px;
+}
+
+.sidebar-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: #4b5563;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  width: 100%;
+}
+
+.nav-item:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.nav-item.active {
+  background-color: #eef2ff;
+  color: #4f46e5;
+}
+
+.sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.logout-btn {
+  color: #ef4444;
+}
+
+.logout-btn:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.top-header {
+  height: 72px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #f3f4f6;
+  padding: 8px 16px;
+  border-radius: 20px;
+  width: 320px;
+}
+
+.search-icon {
+  color: #9ca3af;
+  margin-right: 8px;
+}
+
+.search-bar input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+  color: #374151;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  position: relative;
+}
+
+.icon-btn:hover {
+  color: #111827;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #eef2ff;
+  color: #4f46e5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.user-role {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px;
+}

@@ -1,0 +1,342 @@
+.customer-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-loading {
+  padding: 50px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #4f46e5;
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.detail-header {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 22px;
+}
+
+.detail-identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.detail-avatar {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.detail-identity h1 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.detail-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.detail-contact span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.detail-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.detail-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.detail-list > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 13.5px;
+}
+
+.detail-list dt {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #6b7280;
+}
+
+.detail-list dd {
+  font-weight: 600;
+  color: #111827;
+  text-align: right;
+}
+
+.detail-list dd.pos {
+  color: #16a34a;
+}
+
+.detail-list dd.neg {
+  color: #dc2626;
+}
+
+.progress-wrap {
+  margin-top: 16px;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #f3f4f6;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #34d399, #16a34a);
+  border-radius: 999px;
+  transition: width 0.3s;
+}
+
+.progress-wrap small {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.detail-hint {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #6b7280;
+  background: #f9fafb;
+  border: 1px solid #f3f4f6;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 12px;
+}
+
+.detail-card > .detail-hint:first-of-type {
+  margin-top: 0;
+}
+
+/* Section header with an inline action. */
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.card-head h2 {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.head-note {
+  font-size: 12.5px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+/* Compact button for use inside a card or table row. */
+.btn-sm {
+  padding: 6px 12px !important;
+  font-size: 12.5px !important;
+  gap: 6px;
+}
+
+.col-right {
+  text-align: right;
+}
+
+.row-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.inline-tag {
+  margin-left: 8px;
+  font-size: 10.5px !important;
+  padding: 2px 6px !important;
+}
+
+.customer-detail .muted-dash {
+  color: #d1d5db;
+}
+
+.customer-detail .confirm-text {
+  color: #6b7280;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.customer-detail .field-note,
+.customer-detail .field-warning {
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.customer-detail .field-note {
+  color: #6b7280;
+}
+
+.customer-detail .field-warning {
+  color: #b45309;
+}
+
+/* Two-up field layout inside the narrow financial modals. */
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* Money direction: in is green, out is red and signed. */
+.amount-in {
+  font-weight: 600;
+  color: #16a34a;
+  white-space: nowrap;
+}
+
+.amount-out {
+  font-weight: 600;
+  color: #dc2626;
+  white-space: nowrap;
+}
+
+.detail-hint.warn {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #92400e;
+}
+
+@media (max-width: 520px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Headline balance, straight from the ledger. */
+.balance-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.balance-tile {
+  flex: 1;
+  background: #f5f3ff;
+  border: 1px solid #ede9fe;
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.balance-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #4f46e5;
+  line-height: 1;
+}
+
+.balance-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/*
+ * The collection bar clamps at 100%, so an overpayment looks identical to an
+ * exact settlement. This flag is the only thing distinguishing them.
+ */
+.customer-detail .overpaid-note {
+  color: #b45309;
+  font-weight: 600;
+}
+
+/*
+ * The two entitlement tiles are not peers. Nights are the balance; days are
+ * what those nights read as in one continuous stay. Giving them identical
+ * weight is what made the day figure look like a second allowance being spent
+ * alongside the nights, so the derived tile is deliberately quieter.
+ */
+.balance-tile.balance-tile-derived {
+  background: #fafafa;
+  border-color: #eeeeee;
+}
+
+.balance-tile.balance-tile-derived .balance-value {
+  color: #6b7280;
+  font-size: 22px;
+}
+
+.balance-tile.balance-tile-derived .balance-label {
+  color: #9ca3af;
+}

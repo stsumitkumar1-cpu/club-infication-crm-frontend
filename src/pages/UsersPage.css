@@ -1,0 +1,286 @@
+.users-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.users-page h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.users-page > .page-header-row > div > p {
+  color: #6b7280;
+  font-size: 15px;
+  max-width: 620px;
+}
+
+/* Counter tiles double as role filters, so show which one is applied. */
+.users-page .mini-stat.is-active {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.filter-select {
+  padding: 9px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: white;
+  font-size: 13px;
+  color: #374151;
+  outline: none;
+  cursor: pointer;
+}
+
+.filter-select:focus {
+  border-color: #4f46e5;
+}
+
+/* Role badges extend the shared status-badge palette. */
+.badge-purple {
+  background-color: #f5f3ff;
+  color: #7c3aed;
+}
+
+.badge-blue {
+  background-color: #eff6ff;
+  color: #2563eb;
+}
+
+/* Warning strip for executives with no manager. */
+.notice-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: #92400e;
+}
+
+.notice-banner svg {
+  flex-shrink: 0;
+  color: #d97706;
+}
+
+.notice-link {
+  margin-left: auto;
+  color: #b45309;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.notice-link:hover {
+  text-decoration: underline;
+}
+
+/* ---- table ---- */
+
+.users-table th,
+.users-table td {
+  vertical-align: middle;
+}
+
+.users-table .col-actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.users-table .col-date {
+  color: #6b7280;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+/* Reuses the role badge colours so the avatar encodes the role too. */
+.user-chip {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.user-cell-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.user-cell-name {
+  font-weight: 600;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-cell-text small {
+  color: #9ca3af;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row-inactive td {
+  opacity: 0.55;
+}
+
+.you-tag {
+  font-style: normal;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #4f46e5;
+  background: #eef2ff;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.count-pill {
+  display: inline-block;
+  min-width: 30px;
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #374151;
+  background: #f3f4f6;
+  padding: 3px 9px;
+  border-radius: 6px;
+}
+
+.muted-dash {
+  color: #d1d5db;
+}
+
+.cell-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.icon-action:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.icon-action:disabled:hover {
+  background: none;
+  color: #6b7280;
+}
+
+/* ---- forms ---- */
+
+.form-group-wide {
+  grid-column: 1 / -1;
+}
+
+.form-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #6b7280;
+  background: #f9fafb;
+  border: 1px solid #f3f4f6;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.form-hint svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #4f46e5;
+}
+
+.confirm-text {
+  color: #6b7280;
+  margin: 4px 0 16px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+@media (max-width: 1100px) {
+  .users-table .col-date,
+  .users-table thead th:nth-child(7) {
+    display: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .toolbar {
+    flex-wrap: wrap;
+  }
+
+  .stats-row {
+    flex-wrap: wrap;
+  }
+
+  .users-page .mini-stat {
+    min-width: 130px;
+  }
+}
+
+/* Manager view: the team is fixed to the caller, so it is shown, not chosen. */
+.assigned-self-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px dashed #d1d5db;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #4b5563;
+  background: #f9fafb;
+}
+
+.assigned-self-note svg {
+  color: #4f46e5;
+  flex-shrink: 0;
+}
+
+.form-group input:disabled {
+  background: #f9fafb;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.field-note {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.45;
+}
+
+.danger-note {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #92400e;
+  font-size: 12.5px;
+}
+
+/* A row the caller has no action on. Better than an empty cell, which reads as
+   a rendering failure rather than as "nothing for you here". */
+.users-page .cell-actions-none {
+  color: #d1d5db;
+}

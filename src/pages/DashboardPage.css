@@ -1,0 +1,412 @@
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.page-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.page-header p {
+  color: #6b7280;
+  font-size: 15px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.stat-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.stat-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-details h3 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.dashboard-content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.content-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.card-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/*
+ * Stacks its children. This was previously a centred flex ROW, which was fine
+ * when a card held one placeholder line but laid a table and its caption out
+ * side by side — and the centring pushed wide tables off the left edge.
+ */
+.card-body {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 14px;
+  /* Lets an overflowing table scroll instead of stretching the card. */
+  min-width: 0;
+}
+
+.empty-state {
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* A card holding nothing but an empty state still centres it. */
+.card-body > .empty-state:only-child {
+  margin: auto;
+  text-align: center;
+  padding: 28px 0;
+}
+
+/* ---- Phase 8 dashboard ---- */
+
+.dash-loading {
+  padding: 50px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.dashboard-page .page-header p strong {
+  color: #4f46e5;
+}
+
+.stat-sub {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* Items that need someone to act. */
+.alert-strip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 10px;
+  color: #92400e;
+  font-size: 13px;
+}
+
+.alert-strip svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #d97706;
+}
+
+.alert-items {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  line-height: 1.5;
+}
+
+.alert-items a {
+  color: #b45309;
+  font-weight: 600;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.card-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.card-note {
+  font-size: 12px;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+/* Usage reconciliation table. */
+.usage-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.usage-table th {
+  text-align: right;
+  padding: 0 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.usage-table th:first-child {
+  text-align: left;
+}
+
+.usage-table th svg {
+  vertical-align: -2px;
+  margin-right: 3px;
+}
+
+.usage-table td {
+  padding: 7px 0;
+  border-top: 1px solid #f3f4f6;
+  text-align: right;
+  color: #374151;
+}
+
+.usage-table td:first-child {
+  text-align: left;
+  color: #6b7280;
+}
+
+.usage-table .usage-total td {
+  border-top: 2px solid #e5e7eb;
+  font-weight: 700;
+  color: #111827;
+  padding-top: 10px;
+}
+
+.usage-table .pos,
+.dash-list .pos {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.usage-table .neg,
+.dash-list .neg {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.dash-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  font-size: 13.5px;
+}
+
+.dash-list > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.dash-list > div:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.dash-list dt {
+  color: #6b7280;
+}
+
+.dash-list dd {
+  font-weight: 600;
+  color: #111827;
+}
+
+.dash-list dd small {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.incentive-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: #f9fafb;
+  border: 1px solid #f3f4f6;
+  border-radius: 8px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #6b7280;
+}
+
+.incentive-note svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #4f46e5;
+}
+
+.dashboard-page .row-inactive td {
+  opacity: 0.55;
+}
+
+.dashboard-page .muted-dash {
+  color: #d1d5db;
+}
+
+.dashboard-page .inline-tag {
+  margin-left: 8px;
+  font-size: 10px !important;
+  padding: 2px 5px !important;
+}
+
+/* ---- Executive performance table ---- */
+
+/*
+ * Wide tables scroll inside their own box. The page body must never scroll
+ * sideways, and eight columns will not fit a laptop viewport.
+ */
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  /* Momentum scrolling on trackpads/touch. */
+  -webkit-overflow-scrolling: touch;
+}
+
+.perf-table {
+  width: 100%;
+  min-width: 820px; /* below this the columns cramp, so scroll instead */
+  border-collapse: collapse;
+}
+
+.perf-table th,
+.perf-table td {
+  padding: 12px 14px;
+  white-space: nowrap;
+}
+
+.perf-table thead th {
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  text-align: left;
+}
+
+/* Numbers right-aligned so magnitudes line up and are comparable at a glance. */
+.perf-table .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.perf-table tbody td {
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 13.5px;
+  color: #374151;
+}
+
+.perf-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.perf-table tbody tr:hover td {
+  background: #f9fafb;
+}
+
+/* Sortable headers. */
+.th-sort {
+  cursor: pointer;
+  user-select: none;
+}
+
+.th-sort:hover {
+  color: #4f46e5;
+  background: #f3f4f6;
+}
+
+/*
+ * The name column stays visible while the numbers scroll — without it you lose
+ * track of whose row you are reading.
+ */
+.th-sticky,
+.td-sticky {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: white;
+}
+
+.perf-table thead .th-sticky {
+  background: #f9fafb;
+  z-index: 2;
+}
+
+.perf-table tbody tr:hover .td-sticky {
+  background: #f9fafb;
+}
+
+/* Team-wide totals row. */
+.perf-totals td {
+  border-top: 2px solid #e5e7eb;
+  background: #f9fafb;
+  font-weight: 700;
+  color: #111827;
+  font-size: 13px;
+}
+
+.perf-totals .td-sticky {
+  background: #f9fafb;
+}
