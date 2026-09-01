@@ -1,0 +1,203 @@
+/*
+ * Header search. The pill itself is styled by .search-bar in
+ * DashboardLayout.css — this file adds only the dropdown and the controls
+ * inside the pill, so the header keeps one visual definition.
+ */
+.global-search {
+  position: relative;
+}
+
+.global-search .search-bar {
+  transition: box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.global-search:focus-within .search-bar {
+  background-color: #ffffff;
+  box-shadow: 0 0 0 2px #e0e7ff;
+}
+
+/* Keeps the pill from reflowing as the spinner, clear button and hint swap. */
+.global-search .search-spinner,
+.global-search .search-clear,
+.global-search .search-kbd {
+  flex: 0 0 auto;
+  margin-left: 8px;
+}
+
+.global-search .search-spinner {
+  color: #6366f1;
+  animation: global-search-spin 0.9s linear infinite;
+}
+
+@keyframes global-search-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.global-search .search-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 2px;
+  border-radius: 50%;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.global-search .search-clear:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.global-search .search-kbd {
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #9ca3af;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 2px 5px;
+  white-space: nowrap;
+}
+
+/* ------------------------------- dropdown ------------------------------- */
+
+.global-search .search-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  /* Wider than the 320px pill: subtitles carry a phone, plan and card number. */
+  width: 420px;
+  max-width: min(420px, calc(100vw - 48px));
+  max-height: 70vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+  /* Above the sticky header and any page content beneath it. */
+  z-index: 60;
+  padding: 6px;
+}
+
+.global-search .search-msg {
+  margin: 0;
+  padding: 14px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #6b7280;
+}
+
+.global-search .search-msg-error {
+  color: #b45309;
+}
+
+.global-search .search-group + .search-group {
+  border-top: 1px solid #f3f4f6;
+  margin-top: 4px;
+  padding-top: 4px;
+}
+
+.global-search .search-group-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 8px 10px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+.global-search .search-group-more {
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.global-search .search-hit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+
+/*
+ * One highlight state for both mouse and keyboard: hover sets the active index
+ * rather than painting its own style, so the row Enter would open is always the
+ * row that looks selected.
+ */
+.global-search .search-hit.is-active {
+  background: #eef2ff;
+}
+
+.global-search .search-hit-icon {
+  flex: 0 0 auto;
+  color: #6366f1;
+}
+
+.global-search .search-hit-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  flex: 1;
+}
+
+.global-search .search-hit-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #111827;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.global-search .search-hit-sub {
+  font-size: 12px;
+  color: #6b7280;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.global-search .search-hit-badge {
+  flex: 0 0 auto;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #4b5563;
+  background: #f3f4f6;
+  border-radius: 999px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.global-search .search-foot {
+  margin: 4px 0 0;
+  padding: 8px 10px 4px;
+  border-top: 1px solid #f3f4f6;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+/* The pill shrinks before the dropdown does — the results matter more. */
+@media (max-width: 720px) {
+  .global-search .search-bar {
+    width: 200px;
+  }
+}

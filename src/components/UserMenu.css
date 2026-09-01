@@ -1,0 +1,108 @@
+/*
+ * Header account menu. The chip itself keeps the .user-profile styling from
+ * DashboardLayout.css so the header keeps one visual definition — this file
+ * only turns it into a button and adds the panel.
+ */
+.user-menu {
+  position: relative;
+}
+
+.user-menu-trigger {
+  background: none;
+  border: none;
+  padding: 4px 8px 4px 4px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: background-color 0.12s ease;
+}
+
+.user-menu-trigger:hover,
+.user-menu-trigger:focus-visible {
+  background-color: #f3f4f6;
+  outline: none;
+}
+
+.user-menu-caret {
+  color: #9ca3af;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.user-menu-caret.is-open {
+  transform: rotate(180deg);
+}
+
+/* ------------------------------- the panel ------------------------------- */
+
+.user-menu-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  /* Right-anchored: this is the last thing in the header, so a left-anchored
+     panel would hang off the edge of the viewport. */
+  right: 0;
+  min-width: 240px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+  /* Above the sticky header and the page beneath it. */
+  z-index: 70;
+  padding: 6px;
+}
+
+.user-menu-head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #f3f4f6;
+  margin-bottom: 4px;
+}
+
+.user-menu-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.user-menu-email {
+  font-size: 12px;
+  color: #6b7280;
+  /* An email can be longer than the panel; wrap rather than overflow. */
+  overflow-wrap: anywhere;
+}
+
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  font: inherit;
+  font-size: 13.5px;
+  color: #374151;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.user-menu-item:hover,
+.user-menu-item:focus-visible {
+  background-color: #f3f4f6;
+  outline: none;
+}
+
+.user-menu-item.is-danger {
+  color: #ef4444;
+}
+
+.user-menu-item.is-danger:hover,
+.user-menu-item.is-danger:focus-visible {
+  background-color: #fef2f2;
+  color: #dc2626;
+}

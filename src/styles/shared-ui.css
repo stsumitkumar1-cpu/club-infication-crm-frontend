@@ -1,0 +1,531 @@
+/* Shared UI primitives: buttons, tables, badges, modals, forms, pagination.
+   Extracted verbatim from CustomersPage.css so every feature page shares one
+   definition instead of redeclaring them. Imported once from main.tsx. */
+
+/* Header Row */
+.page-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #4338ca;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: white;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-outline:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background-color: #b91c1c;
+}
+
+/* Stats Row */
+.stats-row {
+  display: flex;
+  gap: 16px;
+}
+
+.mini-stat {
+  flex: 1;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.mini-stat:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.mini-stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.mini-stat-label {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px 14px;
+  flex: 1;
+  max-width: 500px;
+}
+
+.search-form input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #374151;
+  width: 100%;
+  background: transparent;
+}
+
+.search-form svg {
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+/* Table */
+.table-wrapper {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table thead {
+  background-color: #f9fafb;
+}
+
+.data-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.data-table td {
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #374151;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.table-empty {
+  text-align: center;
+  padding: 48px 16px !important;
+  color: #9ca3af;
+}
+
+.cell-name {
+  display: flex;
+  flex-direction: column;
+}
+
+.cell-name span {
+  font-weight: 600;
+  color: #111827;
+}
+
+.cell-name small {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.cell-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-action {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+
+.icon-action:hover {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.icon-action.danger:hover {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-green {
+  background-color: #f0fdf4;
+  color: #16a34a;
+}
+
+.badge-yellow {
+  background-color: #fffbeb;
+  color: #d97706;
+}
+
+.badge-red {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.pagination button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/*
+ * Three groups: size selector, range, page buttons. `justify-content: center`
+ * above is overridden to space-between so the selector sits under the table's
+ * left edge and the page buttons under its right, rather than the three
+ * clumping in the middle.
+ */
+.pagination {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 4px 2px;
+}
+
+.pagination-size {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pagination-size label {
+  font-size: 13px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.pagination-size select {
+  padding: 6px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #374151;
+  background: white;
+  cursor: pointer;
+}
+
+.pagination-size select:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.pagination-range {
+  /* Tabular figures so the range does not jitter as the digits change. */
+  font-variant-numeric: tabular-nums;
+}
+
+.pagination-pages {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Numbered buttons are square; Prev/Next keep their wider label padding. */
+.pagination-pages button {
+  min-width: 36px;
+  justify-content: center;
+  padding: 8px 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pagination-pages button.is-current {
+  background: #4f46e5;
+  border-color: #4f46e5;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* The current page stays legible while a load is in flight — every button is
+   disabled then, and fading the one you are on looks like an error. */
+.pagination-pages button.is-current:disabled {
+  opacity: 1;
+}
+
+.pagination-gap {
+  padding: 0 2px;
+  color: #9ca3af;
+  user-select: none;
+}
+
+@media (max-width: 720px) {
+  .pagination {
+    justify-content: center;
+  }
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.modal-sm {
+  max-width: 400px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: #374151;
+}
+
+.modal-error {
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 16px;
+  border: 1px solid #fecaca;
+}
+
+.modal-form .form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #f3f4f6;
+}
+
+/*
+ * A disabled field must look disabled.
+ *
+ * .form-group sets an explicit `color` on inputs and selects, which overrides
+ * the greying a browser applies to a disabled control by default. The result was
+ * a locked field indistinguishable from an editable one -- so a deliberately
+ * inert dropdown read as a broken dropdown. The reason a field is locked is
+ * always stated beneath it; this makes the locked state itself visible.
+ */
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled {
+  background-color: #f3f4f6;
+  border-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* A read-only field is filled in and meaningful, just not yours to change --
+   so it keeps its normal text colour and only loses the editable affordance. */
+.form-group input:read-only:not(:disabled) {
+  background-color: #f9fafb;
+  cursor: default;
+}
+
+/* A disabled button must look disabled. Without this, .btn-outline and
+   .btn-danger render identically whether they are clickable or not, which
+   reads as "the button is broken". */
+.btn-outline:disabled,
+.btn-danger:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-outline:disabled:hover {
+  background-color: white;
+  border-color: #d1d5db;
+}
+
+.btn-danger:disabled:hover {
+  background-color: #dc2626;
+}
+
+/*
+ * A membership that reached the end of its term. Deliberately neutral rather
+ * than red: expiry is the normal end of a plan, not a problem — CANCELLED keeps
+ * the red so the two read differently at a glance.
+ */
+/*
+ * Informational, not a state: used for a role label, which is neither good nor
+ * bad. The ledger page already referenced this class without it existing, so
+ * ADJUSTMENT rows were rendering unstyled.
+ */
+.badge-blue {
+  background-color: #eef2ff;
+  color: #4338ca;
+}
+
+.badge-gray {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
