@@ -21,6 +21,8 @@ interface Plan {
   price: number;
   days: number;
   nights: number;
+  /** Nights granted each membership year. Null = one pool for the whole term. */
+  nightsPerYear: number | null;
   validityMonths: number;
   isActive: boolean;
   createdAt: string;
@@ -44,6 +46,7 @@ const emptyForm = {
   price: '',
   days: '',
   nights: '',
+  nightsPerYear: '',
   validityMonths: '',
 };
 
@@ -133,6 +136,7 @@ export default function PackagesPage() {
       price: String(p.price),
       days: String(p.days),
       nights: String(p.nights),
+      nightsPerYear: p.nightsPerYear === null ? '' : String(p.nightsPerYear),
       validityMonths: String(p.validityMonths),
     });
     setFormError('');
@@ -144,13 +148,23 @@ export default function PackagesPage() {
     setSaving(true);
     setFormError('');
     try {
-      const payload = {
+      const payload: Record<string, unknown> = {
         name: form.name,
         price: Number(form.price),
         days: Number(form.days),
         nights: Number(form.nights),
         validityMonths: Number(form.validityMonths),
       };
+
+      /*
+       * Sent only when filled. Omitting it leaves the plan on the older rule —
+       * the whole of "nights included" is one pool for the term — so a plan
+       * with no annual cap is expressed by the field being empty rather than by
+       * a zero the API would have to interpret.
+       */
+      if (form.nightsPerYear !== '') {
+        payload.nightsPerYear = Number(form.nightsPerYear);
+      }
 
       if (editingId) {
         await fetchApi(`/packages/${editingId}`, {
@@ -477,6 +491,50 @@ export default function PackagesPage() {
                       setForm({ ...form, nights: e.target.value })
                     }
                   />
+                  <small className="field-note">
+                    Total over the whole term.
+                  </small>
+                </div>
+                <div className="form-group">
+                  <label>Nights per year</label>
+                  <input
+                    type="number"
+                    min={1}
+                    placeholder="e.g. 6"
+                    value={form.nightsPerYear}
+                    onChange={(e) =>
+                      setForm({ ...form, nightsPerYear: e.target.value })
+                    }
+                  />
+                  <small className="field-note">
+                    {form.nightsPerYear === ''
+                      ? 'Leave blank if the member can use all the nights any time during the term.'
+                      : 'Unused nights lapse at the end of each membership year.'}
+                  </small>
+                  {/*
+                    The legacy sheet always states both, and they agree: 6 nights
+                    a year over 5 years is 30 nights. Flagging a mismatch here is
+                    cheaper than discovering it in a member's balance later.
+                  */}
+                  {form.nightsPerYear !== '' &&
+                    form.nights !== '' &&
+                    form.validityMonths !== '' &&
+                    (() => {
+                      const years = Number(form.validityMonths) / 12;
+                      const expected = Math.round(
+                        Number(form.nightsPerYear) * years,
+                      );
+                      if (!years || expected === Number(form.nights)) {
+                        return null;
+                      }
+                      return (
+                        <small className="field-warning">
+                          {form.nightsPerYear} nights x {years} year
+                          {years === 1 ? '' : 's'} = {expected}, but "Nights
+                          included" says {form.nights}. Check which is right.
+                        </small>
+                      );
+                    })()}
                 </div>
               </div>
 

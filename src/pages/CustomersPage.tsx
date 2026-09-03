@@ -14,6 +14,8 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import Pagination, { DEFAULT_PAGE_SIZE } from '../components/Pagination';
+import ImportButton from '../components/ImportButton';
+import ExportButton from '../components/ExportButton';
 import './CustomersPage.css';
 
 interface Customer {
@@ -21,7 +23,10 @@ interface Customer {
   membershipId: string | null;
   name: string;
   phone: string;
+  altPhone: string | null;
   email: string | null;
+  coApplicant: string | null;
+  location: string | null;
   plan: string;
   amount: number;
   amountPaid: number;
@@ -95,9 +100,18 @@ interface Plan {
  * Numeric fields are held as strings so an empty field stays empty and shows
  * its placeholder, rather than a literal 0 the user must delete first.
  */
+/*
+ * Mirrors the columns of the member sheet the team has filled in every month
+ * for two years, because from now on this form replaces it. Anything the sheet
+ * records has a home here — co-applicant, second number, location, ADA, offers
+ * and conditions — so nothing has to be kept on the side.
+ */
 const emptyForm = {
-  name: '', phone: '', email: '', plan: '', amount: '',
-  amountPaid: '', paymentMethod: '', validity: '', totalDays: '', totalNights: '',
+  name: '', phone: '', altPhone: '', email: '', coApplicant: '', location: '',
+  plan: '', amount: '', amountPaid: '', paymentMethod: '',
+  validity: '', totalDays: '', totalNights: '',
+  saleDate: '', adaAmount: '', complimentaryNights: '',
+  offersText: '', remarksText: '',
   assignedExecId: '', membershipId: '', packageId: '',
 };
 
@@ -163,18 +177,30 @@ export default function CustomersPage() {
   const [deleteTarget, setDeleteTarget] = useState<Customer | null>(null);
   const [deleteError, setDeleteError] = useState('');
 
+  /**
+   * The filters currently in force, as query params.
+   *
+   * Built once and used by both the list and the summary tiles: they used to be
+   * fetched with different queries, which is how the table came to show one
+   * Executive's 198 customers under a headline of 835.
+   */
+  const filterParams = useCallback(() => {
+    const params = new URLSearchParams();
+    if (search) params.set('search', search);
+    if (statusFilter) params.set('status', statusFilter);
+    if (planFilter) params.set('plan', planFilter);
+    if (execFilter) params.set('assignedExecId', execFilter);
+    return params;
+  }, [search, statusFilter, planFilter, execFilter]);
+
   const loadCustomers = useCallback(
     async (page = 1, size = pageSize) => {
       setLoading(true);
       setPageError('');
       try {
-        const params = new URLSearchParams();
+        const params = filterParams();
         params.set('page', String(page));
         params.set('limit', String(size));
-        if (search) params.set('search', search);
-        if (statusFilter) params.set('status', statusFilter);
-        if (planFilter) params.set('plan', planFilter);
-        if (execFilter) params.set('assignedExecId', execFilter);
 
         const res = await fetchApi(`/customers?${params.toString()}`);
         setCustomers(res.data);
@@ -185,7 +211,7 @@ export default function CustomersPage() {
         setLoading(false);
       }
     },
-    [search, statusFilter, planFilter, execFilter, pageSize],
+    [filterParams, pageSize],
   );
 
   /**
@@ -200,11 +226,12 @@ export default function CustomersPage() {
 
   const loadStats = useCallback(async () => {
     try {
-      setStats(await fetchApi('/customers/stats'));
+      // Same filters as the list, so the tiles describe the rows beneath them.
+      setStats(await fetchApi(`/customers/stats?${filterParams().toString()}`));
     } catch (err) {
       console.error('Failed to load stats', err);
     }
-  }, []);
+  }, [filterParams]);
 
   /** Owner options come from the API so the UI can only offer valid targets. */
   const loadAssignableUsers = useCallback(async () => {
@@ -227,7 +254,10 @@ export default function CustomersPage() {
 
   useEffect(() => {
     void loadCustomers(1);
-  }, [statusFilter, planFilter, execFilter, loadCustomers]);
+    // The tiles have to follow the filters too, or they describe a different
+    // set of customers from the table.
+    void loadStats();
+  }, [statusFilter, planFilter, execFilter, loadCustomers, loadStats]);
 
   useEffect(() => {
     void loadStats();
@@ -238,6 +268,7 @@ export default function CustomersPage() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     void loadCustomers(1);
+    void loadStats();
   };
 
   const openAddModal = () => {
@@ -261,7 +292,19 @@ export default function CustomersPage() {
     setForm({
       name: c.name,
       phone: c.phone,
+      altPhone: c.altPhone || '',
       email: c.email || '',
+      coApplicant: c.coApplicant || '',
+      location: c.location || '',
+      /*
+       * Sale-only fields stay blank when editing: they belong to the plan
+       * purchase, which is managed from the customer's own page once it exists.
+       */
+      saleDate: '',
+      adaAmount: '',
+      complimentaryNights: '',
+      offersText: '',
+      remarksText: '',
       plan: c.plan,
       amount: String(c.amount),
       amountPaid: String(c.amountPaid),
@@ -325,7 +368,25 @@ export default function CustomersPage() {
       if (!editingId && form.packageId) {
         payload.packageId = form.packageId;
       }
+
+      /*
+       * Sale-only, so create-only. Editing a customer must not silently open a
+       * second ADA charge or credit the complimentary nights again — those
+       * belong to the purchase and are managed on the customer's own page.
+       */
+      if (!editingId) {
+        if (form.saleDate) payload.saleDate = form.saleDate;
+        if (form.adaAmount) payload.adaAmount = Number(form.adaAmount);
+        if (form.complimentaryNights) {
+          payload.complimentaryNights = Number(form.complimentaryNights);
+        }
+        if (form.offersText) payload.offersText = form.offersText;
+        if (form.remarksText) payload.remarksText = form.remarksText;
+      }
       if (form.email) payload.email = form.email;
+      if (form.altPhone) payload.altPhone = form.altPhone;
+      if (form.coApplicant) payload.coApplicant = form.coApplicant;
+      if (form.location) payload.location = form.location;
       if (form.validity) payload.validity = form.validity;
       if (form.membershipId) payload.membershipId = form.membershipId;
       // An Executive always owns what they create, so the API ignores this
@@ -484,9 +545,28 @@ export default function CustomersPage() {
           <h1>Customers</h1>
           <p>Manage your customer base and memberships.</p>
         </div>
-        <button className="btn-primary" onClick={openAddModal}>
-          <Plus size={18} /> Add Customer
-        </button>
+        <div className="page-header-actions">
+          {/*
+            Import is Super Admin only — it creates customers, memberships,
+            payments, entitlement history AND user accounts in one action, which
+            is more reach than any other control in the CRM. Export is open to a
+            Manager as well, scoped to their own team by the API.
+          */}
+          {hasRole('SUPER_ADMIN') && (
+            <ImportButton
+              onImported={() => {
+                void loadCustomers(1);
+                void loadStats();
+              }}
+            />
+          )}
+          {hasRole('SUPER_ADMIN', 'MANAGER') && (
+            <ExportButton path="/exports/customers" />
+          )}
+          <button className="btn-primary" onClick={openAddModal}>
+            <Plus size={18} /> Add Customer
+          </button>
+        </div>
       </div>
 
       {pageError && <div className="modal-error">{pageError}</div>}
@@ -722,8 +802,40 @@ export default function CustomersPage() {
                   <input required value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
                 </div>
                 <div className="form-group">
+                  <label>Alternative phone</label>
+                  <input
+                    value={form.altPhone}
+                    onChange={(e) =>
+                      setForm({ ...form, altPhone: e.target.value })
+                    }
+                  />
+                  <small className="field-note">
+                    A second number for the same member, if there is one.
+                  </small>
+                </div>
+                <div className="form-group">
                   <label>Email</label>
                   <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                </div>
+                <div className="form-group">
+                  <label>Co-applicant</label>
+                  <input
+                    placeholder="e.g. spouse's name"
+                    value={form.coApplicant}
+                    onChange={(e) =>
+                      setForm({ ...form, coApplicant: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Location</label>
+                  <input
+                    placeholder="e.g. Bathinda"
+                    value={form.location}
+                    onChange={(e) =>
+                      setForm({ ...form, location: e.target.value })
+                    }
+                  />
                 </div>
                 <div className="form-group">
                   <label>Plan *</label>
@@ -903,6 +1015,91 @@ export default function CustomersPage() {
                   )}
                 </div>
               </div>
+
+              {!editingId && (
+                <>
+                  <div className="form-section-heading">
+                    This purchase
+                    <small>
+                      Recorded against the membership, not the customer — so
+                      they stay right even when a second plan is bought later.
+                    </small>
+                  </div>
+
+                  <div className="form-grid">
+                    <div className="form-group">
+                      <label>Sale date</label>
+                      <input
+                        type="date"
+                        value={form.saleDate}
+                        onChange={(e) =>
+                          setForm({ ...form, saleDate: e.target.value })
+                        }
+                      />
+                      <small className="field-note">
+                        Leave blank for today. Set it when entering an older
+                        sale — the plan year, and when nights lapse, both count
+                        from here.
+                      </small>
+                    </div>
+                    <div className="form-group">
+                      <label>ADA — annual divided cost</label>
+                      <input
+                        type="number"
+                        min={0}
+                        placeholder="e.g. 8000"
+                        value={form.adaAmount}
+                        onChange={(e) =>
+                          setForm({ ...form, adaAmount: e.target.value })
+                        }
+                      />
+                      <small className="field-note">
+                        Charged every year and tracked apart from the plan price.
+                        Year 1 is raised now; later years as they fall due.
+                      </small>
+                    </div>
+                    <div className="form-group">
+                      <label>Complimentary nights</label>
+                      <input
+                        type="number"
+                        min={0}
+                        placeholder="e.g. 2"
+                        value={form.complimentaryNights}
+                        onChange={(e) =>
+                          setForm({
+                            ...form,
+                            complimentaryNights: e.target.value,
+                          })
+                        }
+                      />
+                      <small className="field-note">
+                        Free nights on top of the plan. Counted separately, and
+                        they do not lapse with the plan year.
+                      </small>
+                    </div>
+                    <div className="form-group">
+                      <label>Offers</label>
+                      <input
+                        placeholder="e.g. 02N/03D Complimentary, Food Voucher ₹3000"
+                        value={form.offersText}
+                        onChange={(e) =>
+                          setForm({ ...form, offersText: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div className="form-group form-group-wide">
+                      <label>Remarks / conditions</label>
+                      <input
+                        placeholder="e.g. only for India, 3 & 4 star properties only"
+                        value={form.remarksText}
+                        onChange={(e) =>
+                          setForm({ ...form, remarksText: e.target.value })
+                        }
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
 
               <div className="modal-actions">
                 <button type="button" className="btn-outline" onClick={() => setShowModal(false)}>Cancel</button>

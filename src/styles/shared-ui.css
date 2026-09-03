@@ -529,3 +529,36 @@
   background-color: #f3f4f6;
   color: #4b5563;
 }
+
+/* Export button, and the header row that holds it beside the primary action. */
+.page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.export-button-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.export-spinner {
+  animation: export-spin 0.9s linear infinite;
+}
+
+@keyframes export-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Failures are shown next to the button rather than as a page banner: the
+   download is a side action, and it should not push the table around. */
+.export-error {
+  font-size: 12px;
+  color: #b45309;
+  max-width: 220px;
+  line-height: 1.4;
+}
