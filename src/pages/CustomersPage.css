@@ -168,3 +168,30 @@ a.icon-action {
   border-top-color: transparent;
   border-bottom-color: #1f2937;
 }
+
+/*
+ * Divider inside the customer form.
+ *
+ * The form now covers two different things — who the member is, and what they
+ * just bought — and the second set is create-only. A labelled break says which
+ * is which without needing a second dialog.
+ */
+.customers-page .form-section-heading {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 20px 0 4px;
+  padding-top: 16px;
+  border-top: 1px solid #f3f4f6;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.customers-page .form-section-heading small {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #6b7280;
+}

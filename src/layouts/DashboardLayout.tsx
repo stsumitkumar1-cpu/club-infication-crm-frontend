@@ -6,7 +6,6 @@ import {
   UserSquare2,
   Package as PackageIcon,
   LogOut,
-  Bell,
 } from 'lucide-react';
 import { useAuth } from '../app/providers/AuthProvider';
 import GlobalSearch from '../components/GlobalSearch';
@@ -86,9 +85,8 @@ export default function DashboardLayout() {
           <GlobalSearch />
 
           <div className="header-right">
-            <button className="icon-btn">
-              <Bell size={20} />
-            </button>
+            {/* Notifications button hidden for now — there is nothing behind
+                it yet. Re-import Bell from lucide-react to bring it back. */}
             <UserMenu />
           </div>
         </header>
