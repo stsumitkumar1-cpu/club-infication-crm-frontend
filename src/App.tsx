@@ -10,6 +10,8 @@ import CustomersPage from './pages/CustomersPage';
 import CustomerDetailPage from './pages/CustomerDetailPage';
 import PackagesPage from './pages/PackagesPage';
 import ProfilePage from './pages/ProfilePage';
+import MiscellaneousExpensesPage from './pages/MiscellaneousExpensesPage';
+import SalariesIncentivesPage from './pages/SalariesIncentivesPage';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
               <Route path="customers/:id" element={<CustomerDetailPage />} />
               {/* Plan catalog: everyone reads it, Super Admin edits it. */}
               <Route path="packages" element={<PackagesPage />} />
+              <Route path="miscellaneous-expenses" element={<MiscellaneousExpensesPage />} />
+              <Route path="salaries-incentives" element={<SalariesIncentivesPage />} />
               {/* Every signed-in role has a profile — it is their own record. */}
               <Route path="profile" element={<ProfilePage />} />
 

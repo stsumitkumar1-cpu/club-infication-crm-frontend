@@ -58,6 +58,7 @@ interface Customer {
    */
   payments: { id: string; method: string | null }[];
   createdAt: string;
+  registrationDate: string | null;
 }
 
 interface Meta {
@@ -163,6 +164,8 @@ export default function CustomersPage() {
   const [statusFilter, setStatusFilter] = useState('');
   const [planFilter, setPlanFilter] = useState('');
   const [execFilter, setExecFilter] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [loading, setLoading] = useState(true);
   const [pageError, setPageError] = useState('');
 
@@ -190,8 +193,10 @@ export default function CustomersPage() {
     if (statusFilter) params.set('status', statusFilter);
     if (planFilter) params.set('plan', planFilter);
     if (execFilter) params.set('assignedExecId', execFilter);
+    if (startDate) params.set('startDate', startDate);
+    if (endDate) params.set('endDate', endDate);
     return params;
-  }, [search, statusFilter, planFilter, execFilter]);
+  }, [search, statusFilter, planFilter, execFilter, startDate, endDate]);
 
   const loadCustomers = useCallback(
     async (page = 1, size = pageSize) => {
@@ -257,7 +262,7 @@ export default function CustomersPage() {
     // The tiles have to follow the filters too, or they describe a different
     // set of customers from the table.
     void loadStats();
-  }, [statusFilter, planFilter, execFilter, loadCustomers, loadStats]);
+  }, [statusFilter, planFilter, execFilter, startDate, endDate, loadCustomers, loadStats]);
 
   useEffect(() => {
     void loadStats();
@@ -426,8 +431,7 @@ export default function CustomersPage() {
           });
         } catch (err: any) {
           setFormError(
-            `The customer was saved, but the payment method could not be updated: ${
-              err?.message ?? 'unknown error'
+            `The customer was saved, but the payment method could not be updated: ${err?.message ?? 'unknown error'
             }`,
           );
           await Promise.all([loadCustomers(meta.page), loadStats()]);
@@ -647,6 +651,24 @@ export default function CustomersPage() {
           </select>
         )}
 
+        <div className="date-filter">
+          <input
+            type="date"
+            className="filter-select"
+            title="From Date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+          <span style={{ color: '#6b7280', margin: '0 4px' }}>to</span>
+          <input
+            type="date"
+            className="filter-select"
+            title="To Date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+        </div>
+
         {statusFilter && (
           <button className="btn-outline" onClick={() => setStatusFilter('')}>
             <Filter size={14} /> {statusFilter} <X size={14} />
@@ -666,6 +688,7 @@ export default function CustomersPage() {
           <thead>
             <tr>
               <th>Name</th>
+              <th>Reg. Date</th>
               <th>Phone</th>
               <th>Plan</th>
               <th>Amount</th>
@@ -678,10 +701,10 @@ export default function CustomersPage() {
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={9} className="table-empty">Loading...</td></tr>
+              <tr><td colSpan={10} className="table-empty">Loading...</td></tr>
             ) : customers.length === 0 ? (
               <tr>
-                <td colSpan={9} className="table-empty">
+                <td colSpan={10} className="table-empty">
                   {/* A failed load must not claim there are no customers. */}
                   {pageError
                     ? 'Could not load customers. See the message above.'
@@ -699,6 +722,7 @@ export default function CustomersPage() {
                     </Link>
                     {c.email && <small>{c.email}</small>}
                   </td>
+                  <td>{c.registrationDate ? new Date(c.registrationDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '-'}</td>
                   <td>{c.phone}</td>
                   <td>{c.plan}</td>
                   <td>{money(c.amount)}</td>
