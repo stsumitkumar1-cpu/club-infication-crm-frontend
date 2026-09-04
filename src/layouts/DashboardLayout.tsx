@@ -5,6 +5,8 @@ import {
   Network,
   UserSquare2,
   Package as PackageIcon,
+  Receipt,
+  Banknote,
   LogOut,
 } from 'lucide-react';
 import { useAuth } from '../app/providers/AuthProvider';
@@ -69,6 +71,20 @@ export default function DashboardLayout() {
             <PackageIcon size={20} />
             <span>Plans</span>
           </NavLink>
+
+          {hasRole('SUPER_ADMIN') && (
+            <>
+              <NavLink to="/miscellaneous-expenses" className={navClass}>
+                <Receipt size={20} />
+                <span>Miscellaneous Expenses</span>
+              </NavLink>
+
+              <NavLink to="/salaries-incentives" className={navClass}>
+                <Banknote size={20} />
+                <span>Incentives & Salaries</span>
+              </NavLink>
+            </>
+          )}
 
         </nav>
 

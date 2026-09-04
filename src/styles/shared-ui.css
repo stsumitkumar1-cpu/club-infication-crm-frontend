@@ -171,6 +171,7 @@
   font-size: 14px;
   color: #374151;
   border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
 }
 
 .data-table tbody tr:hover {
@@ -200,6 +201,7 @@
 
 .cell-actions {
   display: flex;
+  align-items: center;
   gap: 8px;
 }
 
